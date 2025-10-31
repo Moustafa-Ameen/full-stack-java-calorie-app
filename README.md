@@ -8,7 +8,7 @@ This project was built from scratch to demonstrate full-stack development skills
 
 ### Live Demo
 
-**(Paste your live Render.com URL here once hosting is complete)**
+**https://moustafa-calorie-tracker.onrender.com**
 
 ### Key Features
 
