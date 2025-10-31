@@ -1,0 +1,402 @@
+[
+  {
+    "name": "chicken breast",
+    "calories": 165,
+    "protein_g": 31,
+    "carbohydrates_total_g": 0,
+    "fat_total_g": 3.6,
+    "serving_size_g": 100
+  },
+  {
+    "name": "salmon",
+    "calories": 208,
+    "protein_g": 20,
+    "carbohydrates_total_g": 0,
+    "fat_total_g": 13,
+    "serving_size_g": 100
+  },
+  {
+    "name": "tuna",
+    "calories": 132,
+    "protein_g": 28,
+    "carbohydrates_total_g": 0,
+    "fat_total_g": 1.3,
+    "serving_size_g": 100
+  },
+  {
+    "name": "ground beef",
+    "calories": 250,
+    "protein_g": 26,
+    "carbohydrates_total_g": 0,
+    "fat_total_g": 15,
+    "serving_size_g": 100
+  },
+  {
+    "name": "turkey breast",
+    "calories": 135,
+    "protein_g": 30,
+    "carbohydrates_total_g": 0,
+    "fat_total_g": 1,
+    "serving_size_g": 100
+  },
+  {
+    "name": "eggs",
+    "calories": 155,
+    "protein_g": 13,
+    "carbohydrates_total_g": 1.1,
+    "fat_total_g": 11,
+    "serving_size_g": 100
+  },
+  {
+    "name": "greek yogurt",
+    "calories": 97,
+    "protein_g": 10,
+    "carbohydrates_total_g": 3.6,
+    "fat_total_g": 5,
+    "serving_size_g": 100
+  },
+  {
+    "name": "milk",
+    "calories": 61,
+    "protein_g": 3.2,
+    "carbohydrates_total_g": 4.8,
+    "fat_total_g": 3.3,
+    "serving_size_g": 100
+  },
+  {
+    "name": "cheddar cheese",
+    "calories": 403,
+    "protein_g": 25,
+    "carbohydrates_total_g": 1.3,
+    "fat_total_g": 33,
+    "serving_size_g": 100
+  },
+  {
+    "name": "white rice",
+    "calories": 130,
+    "protein_g": 2.7,
+    "carbohydrates_total_g": 28,
+    "fat_total_g": 0.3,
+    "serving_size_g": 100
+  },
+  {
+    "name": "brown rice",
+    "calories": 111,
+    "protein_g": 2.6,
+    "carbohydrates_total_g": 23,
+    "fat_total_g": 0.9,
+    "serving_size_g": 100
+  },
+  {
+    "name": "pasta",
+    "calories": 131,
+    "protein_g": 5,
+    "carbohydrates_total_g": 25,
+    "fat_total_g": 1.1,
+    "serving_size_g": 100
+  },
+  {
+    "name": "whole wheat bread",
+    "calories": 247,
+    "protein_g": 13,
+    "carbohydrates_total_g": 41,
+    "fat_total_g": 3.4,
+    "serving_size_g": 100
+  },
+  {
+    "name": "white bread",
+    "calories": 265,
+    "protein_g": 9,
+    "carbohydrates_total_g": 49,
+    "fat_total_g": 3.2,
+    "serving_size_g": 100
+  },
+  {
+    "name": "oatmeal",
+    "calories": 71,
+    "protein_g": 2.5,
+    "carbohydrates_total_g": 12,
+    "fat_total_g": 1.5,
+    "serving_size_g": 100
+  },
+  {
+    "name": "banana",
+    "calories": 89,
+    "protein_g": 1.1,
+    "carbohydrates_total_g": 23,
+    "fat_total_g": 0.3,
+    "serving_size_g": 100
+  },
+  {
+    "name": "apple",
+    "calories": 52,
+    "protein_g": 0.3,
+    "carbohydrates_total_g": 14,
+    "fat_total_g": 0.2,
+    "serving_size_g": 100
+  },
+  {
+    "name": "orange",
+    "calories": 47,
+    "protein_g": 0.9,
+    "carbohydrates_total_g": 12,
+    "fat_total_g": 0.1,
+    "serving_size_g": 100
+  },
+  {
+    "name": "strawberries",
+    "calories": 32,
+    "protein_g": 0.7,
+    "carbohydrates_total_g": 7.7,
+    "fat_total_g": 0.3,
+    "serving_size_g": 100
+  },
+  {
+    "name": "blueberries",
+    "calories": 57,
+    "protein_g": 0.7,
+    "carbohydrates_total_g": 14,
+    "fat_total_g": 0.3,
+    "serving_size_g": 100
+  },
+  {
+    "name": "broccoli",
+    "calories": 34,
+    "protein_g": 2.8,
+    "carbohydrates_total_g": 7,
+    "fat_total_g": 0.4,
+    "serving_size_g": 100
+  },
+  {
+    "name": "spinach",
+    "calories": 23,
+    "protein_g": 2.9,
+    "carbohydrates_total_g": 3.6,
+    "fat_total_g": 0.4,
+    "serving_size_g": 100
+  },
+  {
+    "name": "carrots",
+    "calories": 41,
+    "protein_g": 0.9,
+    "carbohydrates_total_g": 10,
+    "fat_total_g": 0.2,
+    "serving_size_g": 100
+  },
+  {
+    "name": "sweet potato",
+    "calories": 86,
+    "protein_g": 1.6,
+    "carbohydrates_total_g": 20,
+    "fat_total_g": 0.1,
+    "serving_size_g": 100
+  },
+  {
+    "name": "potato",
+    "calories": 77,
+    "protein_g": 2,
+    "carbohydrates_total_g": 17,
+    "fat_total_g": 0.1,
+    "serving_size_g": 100
+  },
+  {
+    "name": "avocado",
+    "calories": 160,
+    "protein_g": 2,
+    "carbohydrates_total_g": 9,
+    "fat_total_g": 15,
+    "serving_size_g": 100
+  },
+  {
+    "name": "almonds",
+    "calories": 579,
+    "protein_g": 21,
+    "carbohydrates_total_g": 22,
+    "fat_total_g": 50,
+    "serving_size_g": 100
+  },
+  {
+    "name": "peanut butter",
+    "calories": 588,
+    "protein_g": 25,
+    "carbohydrates_total_g": 20,
+    "fat_total_g": 50,
+    "serving_size_g": 100
+  },
+  {
+    "name": "walnuts",
+    "calories": 654,
+    "protein_g": 15,
+    "carbohydrates_total_g": 14,
+    "fat_total_g": 65,
+    "serving_size_g": 100
+  },
+  {
+    "name": "olive oil",
+    "calories": 884,
+    "protein_g": 0,
+    "carbohydrates_total_g": 0,
+    "fat_total_g": 100,
+    "serving_size_g": 100
+  },
+  {
+    "name": "butter",
+    "calories": 717,
+    "protein_g": 0.9,
+    "carbohydrates_total_g": 0.1,
+    "fat_total_g": 81,
+    "serving_size_g": 100
+  },
+  {
+    "name": "bacon",
+    "calories": 541,
+    "protein_g": 37,
+    "carbohydrates_total_g": 1.4,
+    "fat_total_g": 42,
+    "serving_size_g": 100
+  },
+  {
+    "name": "pork chop",
+    "calories": 231,
+    "protein_g": 27,
+    "carbohydrates_total_g": 0,
+    "fat_total_g": 13,
+    "serving_size_g": 100
+  },
+  {
+    "name": "shrimp",
+    "calories": 99,
+    "protein_g": 24,
+    "carbohydrates_total_g": 0.2,
+    "fat_total_g": 0.3,
+    "serving_size_g": 100
+  },
+  {
+    "name": "tofu",
+    "calories": 76,
+    "protein_g": 8,
+    "carbohydrates_total_g": 1.9,
+    "fat_total_g": 4.8,
+    "serving_size_g": 100
+  },
+  {
+    "name": "black beans",
+    "calories": 132,
+    "protein_g": 8.9,
+    "carbohydrates_total_g": 24,
+    "fat_total_g": 0.5,
+    "serving_size_g": 100
+  },
+  {
+    "name": "chickpeas",
+    "calories": 164,
+    "protein_g": 8.9,
+    "carbohydrates_total_g": 27,
+    "fat_total_g": 2.6,
+    "serving_size_g": 100
+  },
+  {
+    "name": "lentils",
+    "calories": 116,
+    "protein_g": 9,
+    "carbohydrates_total_g": 20,
+    "fat_total_g": 0.4,
+    "serving_size_g": 100
+  },
+  {
+    "name": "quinoa",
+    "calories": 120,
+    "protein_g": 4.4,
+    "carbohydrates_total_g": 21,
+    "fat_total_g": 1.9,
+    "serving_size_g": 100
+  },
+  {
+    "name": "hummus",
+    "calories": 166,
+    "protein_g": 8,
+    "carbohydrates_total_g": 14,
+    "fat_total_g": 10,
+    "serving_size_g": 100
+  },
+  {
+    "name": "pizza",
+    "calories": 266,
+    "protein_g": 11,
+    "carbohydrates_total_g": 33,
+    "fat_total_g": 10,
+    "serving_size_g": 100
+  },
+  {
+    "name": "hamburger",
+    "calories": 295,
+    "protein_g": 17,
+    "carbohydrates_total_g": 24,
+    "fat_total_g": 14,
+    "serving_size_g": 100
+  },
+  {
+    "name": "french fries",
+    "calories": 312,
+    "protein_g": 3.4,
+    "carbohydrates_total_g": 41,
+    "fat_total_g": 15,
+    "serving_size_g": 100
+  },
+  {
+    "name": "chocolate",
+    "calories": 546,
+    "protein_g": 4.9,
+    "carbohydrates_total_g": 61,
+    "fat_total_g": 31,
+    "serving_size_g": 100
+  },
+  {
+    "name": "ice cream",
+    "calories": 207,
+    "protein_g": 3.5,
+    "carbohydrates_total_g": 24,
+    "fat_total_g": 11,
+    "serving_size_g": 100
+  },
+  {
+    "name": "protein shake",
+    "calories": 103,
+    "protein_g": 20,
+    "carbohydrates_total_g": 3,
+    "fat_total_g": 1.5,
+    "serving_size_g": 100
+  },
+  {
+    "name": "cottage cheese",
+    "calories": 98,
+    "protein_g": 11,
+    "carbohydrates_total_g": 3.4,
+    "fat_total_g": 4.3,
+    "serving_size_g": 100
+  },
+  {
+    "name": "mozzarella",
+    "calories": 280,
+    "protein_g": 28,
+    "carbohydrates_total_g": 2.2,
+    "fat_total_g": 17,
+    "serving_size_g": 100
+  },
+  {
+    "name": "sausage",
+    "calories": 301,
+    "protein_g": 12,
+    "carbohydrates_total_g": 1.6,
+    "fat_total_g": 27,
+    "serving_size_g": 100
+  },
+  {
+    "name": "bagel",
+    "calories": 257,
+    "protein_g": 10,
+    "carbohydrates_total_g": 50,
+    "fat_total_g": 1.5,
+    "serving_size_g": 100
+  }
+]

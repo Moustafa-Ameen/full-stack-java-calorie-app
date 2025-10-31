@@ -1,0 +1,20 @@
+# Compiled Java output
+/target/
+*.class
+
+# Log files
+*.log
+logs/
+
+# IDE files (IntelliJ)
+.idea/
+*.iml
+*.iws
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+
+# Other
+.DS_Store

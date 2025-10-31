@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        #side-menu { transition: transform 0.3s ease-in-out; }
+        .modal { display: none; }
+        .modal.active { display: flex; }
+        #search-results { max-height: 250px; overflow-y: auto; }
+        input[readonly] { background-color: #f1f5f9; cursor: not-allowed; }
+        .modal > div { box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.07); }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .modal > div {
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+            #search-results {
+                max-height: 200px;
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+<header class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md sticky top-0 z-20">
+    <div class="container mx-auto p-4 flex justify-between items-center max-w-5xl">
+        <div class="flex items-center gap-3">
+            <!-- Food Icon using Font Awesome -->
+            <i class="fas fa-utensils text-3xl"></i>
+            <h1 class="text-2xl font-bold">Calorie Tracker</h1>
+        </div>
+        <button id="menu-btn" class="p-2 text-white/80 hover:text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+    </div>
+</header>
+
+<div id="side-menu" class="fixed top-0 right-0 h-full w-64 bg-white shadow-lg z-40 transform translate-x-full">
+    <div class="p-4 flex justify-between items-center border-b">
+        <h2 class="text-xl font-bold text-slate-800">Menu</h2>
+        <button id="close-menu-btn" class="text-2xl text-slate-500 hover:text-red-500">&times;</button>
+    </div>
+    <nav class="p-4">
+        <ul class="space-y-2">
+            <li><button id="settings-menu-btn" class="w-full text-left py-2 px-3 rounded hover:bg-slate-100 text-slate-700">⚙️ Settings & Goals</button></li>
+        </ul>
+    </nav>
+</div>
+<div id="menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden"></div>
+
+<main class="container mx-auto p-4 md:p-8 max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="md:col-span-1 space-y-8">
+        <section class="bg-white p-6 rounded-2xl shadow-lg text-center">
+            <div class="flex items-center justify-center gap-4 mb-4">
+                <button id="prev-day-btn" class="text-2xl font-bold text-slate-400 hover:text-emerald-600">&larr;</button>
+                <h3 id="current-date-display" class="text-xl font-semibold text-slate-800 w-64 text-center">Today</h3>
+                <button id="next-day-btn" class="text-2xl font-bold text-slate-400 hover:text-emerald-600">&rarr;</button>
+            </div>
+            <div class="relative w-56 h-56 mx-auto">
+                <canvas id="calorie-chart"></canvas>
+                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                    <span id="consumed-calories" class="text-5xl font-bold text-slate-800">0</span>
+                    <span class="text-sm text-slate-500">Consumed</span>
+                    <span class="text-xs text-slate-400">Goal: <span id="goal-calories-display">2000</span> kcal</span>
+                </div>
+            </div>
+            <div class="mt-6 space-y-4">
+                <div>
+                    <div class="flex justify-between text-sm font-medium text-slate-600">
+                        <p>Protein</p>
+                        <p><span id="protein-total">0</span>g / <span id="protein-goal">0</span>g</p>
+                    </div>
+                    <div class="w-full bg-slate-200 rounded-full h-2.5 mt-1">
+                        <div id="protein-bar" class="bg-sky-500 h-2.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between text-sm font-medium text-slate-600">
+                        <p>Carbs</p>
+                        <p><span id="carbs-total">0</span>g / <span id="carbs-goal">0</span>g</p>
+                    </div>
+                    <div class="w-full bg-slate-200 rounded-full h-2.5 mt-1">
+                        <div id="carbs-bar" class="bg-orange-500 h-2.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between text-sm font-medium text-slate-600">
+                        <p>Fat</p>
+                        <p><span id="fat-total">0</span>g / <span id="fat-goal">0</span>g</p>
+                    </div>
+                    <div class="w-full bg-slate-200 rounded-full h-2.5 mt-1">
+                        <div id="fat-bar" class="bg-amber-500 h-2.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white p-6 rounded-2xl shadow-lg">
+            <h2 class="text-xl font-semibold text-slate-800 mb-4">My Foods</h2>
+            <ul id="my-foods-list" class="space-y-3 max-h-60 overflow-y-auto pr-2">
+                <!-- Food items will be added here by JavaScript -->
+            </ul>
+            <div id="no-my-foods-state" class="text-center text-slate-500 py-8 hidden">
+                <p>You haven't added any custom foods yet!</p>
+            </div>
+        </section>
+    </div>
+
+    <div class="md:col-span-1 space-y-8">
+        <section class="bg-white p-6 rounded-2xl shadow-lg">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-slate-800">Log Food</h2>
+                <button id="open-manual-add-btn" class="text-sm font-semibold text-emerald-600 hover:text-emerald-500">+ Add My Food</button>
+            </div>
+            <div class="relative mb-4">
+                <input type="text" id="food-search-input" placeholder="Search for your food here" class="p-3 border border-slate-300 rounded-md w-full focus:ring-emerald-500 focus:border-emerald-500" autocomplete="off">
+                <div id="search-results" class="absolute top-full left-0 right-0 bg-white border border-slate-200 rounded-b-md shadow-lg z-10 hidden"></div>
+            </div>
+            <form id="food-form" class="space-y-4">
+                <input type="text" id="foodName" placeholder="Select a food from search" class="p-3 border border-slate-300 rounded-md w-full" required readonly>
+                <div class="grid grid-cols-1">
+                    <div>
+                        <label for="serving-size" class="text-sm text-slate-600">Serving Size (g)</label>
+                        <input type="number" id="serving-size" value="100" class="p-2 border border-slate-300 rounded-md w-full focus:ring-emerald-500 focus:border-emerald-500">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="calories" class="text-sm text-slate-600">Calories</label>
+                        <input type="number" id="calories" class="p-2 border border-slate-300 rounded-md w-full" required readonly>
+                    </div>
+                    <div>
+                        <label for="protein" class="text-sm text-slate-600">Protein (g)</label>
+                        <input type="number" id="protein" class="p-2 border border-slate-300 rounded-md w-full" value="0" readonly>
+                    </div>
+                    <div>
+                        <label for="carbs" class="text-sm text-slate-600">Carbs (g)</label>
+                        <input type="number" id="carbs" class="p-2 border border-slate-300 rounded-md w-full" value="0" readonly>
+                    </div>
+                    <div>
+                        <label for="fat" class="text-sm text-slate-600">Fat (g)</label>
+                        <input type="number" id="fat" class="p-2 border border-slate-300 rounded-md w-full" value="0" readonly>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-emerald-500 text-white font-semibold py-3 rounded-md hover:bg-emerald-600 transition duration-200">Add to Diary</button>
+            </form>
+        </section>
+        <section class="bg-white p-6 rounded-2xl shadow-lg">
+            <h2 class="text-xl font-semibold text-slate-800 mb-4">Today's Diary</h2>
+            <ul id="food-list" class="space-y-3 max-h-60 overflow-y-auto pr-2"></ul>
+            <div id="empty-state" class="text-center text-slate-500 py-8">
+                <p>No foods logged yet!</p>
+            </div>
+        </section>
+    </div>
+</main>
+
+<div id="edit-modal" class="modal fixed inset-0 bg-black bg-opacity-60 z-50 items-center justify-center p-4">
+    <div class="bg-white p-8 rounded-xl w-full max-w-md relative">
+        <button class="close-modal-btn absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-2xl">&times;</button>
+        <h2 class="text-2xl font-bold text-center text-slate-800 mb-6">Edit Food Entry</h2>
+        <form id="edit-form" class="space-y-4">
+            <input type="hidden" id="edit-id">
+            <input type="text" id="edit-foodName" class="w-full p-3 border border-slate-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500" required>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="edit-calories" class="text-sm text-slate-600">Calories</label>
+                    <input type="number" id="edit-calories" class="p-2 border border-slate-300 rounded-md w-full focus:ring-emerald-500 focus:border-emerald-500" required>
+                </div>
+                <div>
+                    <label for="edit-protein" class="text-sm text-slate-600">Protein (g)</label>
+                    <input type="number" id="edit-protein" class="p-2 border border-slate-300 rounded-md w-full focus:ring-emerald-500 focus:border-emerald-500">
+                </div>
+                <div>
+                    <label for="edit-carbs" class="text-sm text-slate-600">Carbs (g)</label>
+                    <input type="number" id="edit-carbs" class="p-2 border border-slate-300 rounded-md w-full focus:ring-emerald-500 focus:border-emerald-500">
+                </div>
+                <div>
+                    <label for="edit-fat" class="text-sm text-slate-600">Fat (g)</label>
+                    <input type="number" id="edit-fat" class="p-2 border border-slate-300 rounded-md w-full focus:ring-emerald-500 focus:border-emerald-500">
+                </div>
+            </div>
+            <button type="submit" class="w-full bg-emerald-500 text-white font-semibold py-3 rounded-md hover:bg-emerald-600 transition duration-200">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+<div id="edit-my-food-modal" class="modal fixed inset-0 bg-black bg-opacity-60 z-50 items-center justify-center p-4">
+    <div class="bg-white p-8 rounded-xl w-full max-w-md relative">
+        <button class="close-modal-btn absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-2xl">&times;</button>
+        <h2 class="text-2xl font-bold text-center text-slate-800 mb-6">Edit Custom Food</h2>
+        <form id="edit-my-food-form" class="space-y-4">
+            <input type="hidden" id="edit-my-food-id">
+            <input type="text" id="edit-my-food-name" placeholder="Food name" class="w-full p-3 border border-slate-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500" required>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="edit-my-food-calories" class="text-sm text-slate-600">Calories</label>
+                    <input type="number" id="edit-my-food-calories" class="p-2 border border-slate-300 rounded-md w-full focus:ring-emerald-500 focus:border-emerald-500" required>
+                </div>
+                <div>
+                    <label for="edit-my-food-protein" class="text-sm text-slate-600">Protein (g)</label>
+                    <input type="number" id="edit-my-food-protein" class="p-2 border border-slate-300 rounded-md w-full focus:ring-emerald-500 focus:border-emerald-500" value="0">
+                </div>
+                <div>
+                    <label for="edit-my-food-carbs" class="text-sm text-slate-600">Carbs (g)</label>
+                    <input type="number" id="edit-my-food-carbs" class="p-2 border border-slate-300 rounded-md w-full focus:ring-emerald-500 focus:border-emerald-500" value="0">
+                </div>
+                <div>
+                    <label for="edit-my-food-fat" class="text-sm text-slate-600">Fat (g)</label>
+                    <input type="number" id="edit-my-food-fat" class="p-2 border border-slate-300 rounded-md w-full focus:ring-emerald-500 focus:border-emerald-500" value="0">
+                </div>
+            </div>
+            <button type="submit" class="w-full bg-emerald-500 text-white font-semibold py-3 rounded-md hover:bg-emerald-600 transition duration-200">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+<div id="manual-add-modal" class="modal fixed inset-0 bg-black bg-opacity-60 z-50 items-center justify-center p-4">
+    <div class="bg-white p-8 rounded-xl w-full max-w-md relative">
+        <button class="close-modal-btn absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-2xl">&times;</button>
+        <h2 class="text-2xl font-bold text-center text-slate-800 mb-6">Add a Custom Food</h2>
+        <form id="manual-add-form" class="space-y-4">
+            <input type="text" id="manual-foodName" placeholder="Food name" class="w-full p-3 border border-slate-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500" required>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="manual-calories" class="text-sm text-slate-600">Calories</label>
+                    <input type="number" id="manual-calories" class="p-2 border border-slate-300 rounded-md w-full focus:ring-emerald-500 focus:border-emerald-500" required>
+                </div>
+                <div>
+                    <label for="manual-protein" class="text-sm text-slate-600">Protein (g)</label>
+                    <input type="number" id="manual-protein" class="p-2 border border-slate-300 rounded-md w-full focus:ring-emerald-500 focus:border-emerald-500" value="0">
+                </div>
+                <div>
+                    <label for="manual-carbs" class="text-sm text-slate-600">Carbs (g)</label>
+                    <input type="number" id="manual-carbs" class="p-2 border border-slate-300 rounded-md w-full focus:ring-emerald-500 focus:border-emerald-500" value="0">
+                </div>
+                <div>
+                    <label for="manual-fat" class="text-sm text-slate-600">Fat (g)</label>
+                    <input type="number" id="manual-fat" class="p-2 border border-slate-300 rounded-md w-full focus:ring-emerald-500 focus:border-emerald-500" value="0">
+                </div>
+            </div>
+            <button type="submit" class="w-full bg-emerald-500 text-white font-semibold py-3 rounded-md hover:bg-emerald-600 transition duration-200">Save Custom Food</button>
+        </form>
+    </div>
+</div>
+
+<div id="settings-modal" class="modal fixed inset-0 bg-black bg-opacity-60 z-50 items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white p-8 rounded-xl w-full max-w-lg relative">
+        <button class="close-modal-btn absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-2xl">&times;</button>
+        <h2 class="text-2xl font-bold text-center text-slate-800 mb-6">Settings & Goals</h2>
+        <div class="space-y-8">
+            <section>
+                <h3 class="text-xl font-semibold text-slate-800 mb-4">Your Daily Goals</h3>
+                <form id="goal-form" class="space-y-4">
+                    <div class="flex flex-col sm:flex-row gap-4 items-end">
+                        <div>
+                            <label for="calorie-goal-input" class="text-sm font-medium text-slate-600">Calorie Goal</label>
+                            <input type="number" id="calorie-goal-input" placeholder="e.g., 2000" class="p-2 border border-slate-300 rounded-md w-full focus:ring-emerald-500 focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label for="macro-goal-select" class="text-sm font-medium text-slate-600">Macro Split</label>
+                            <select id="macro-goal-select" class="p-2 border border-slate-300 rounded-md w-full focus:ring-emerald-500 focus:border-emerald-500">
+                                <option value="balanced">Balanced (40C/30P/30F)</option>
+                                <option value="muscle-gain">Muscle Gain (30C/40P/30F)</option>
+                                <option value="low-carb">Low Carb (20C/40P/40F)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-emerald-600 transition duration-200">Save Goals</button>
+                </form>
+            </section>
+            <hr class="border-slate-200">
+            <section>
+                <h3 class="text-xl font-semibold text-slate-800 mb-4">Maintenance Calculator</h3>
+                <form id="calculator-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="number" id="age" placeholder="Age" class="p-3 border border-slate-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500">
+                    <select id="gender" class="p-3 border border-slate-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                    <input type="number" id="weight" placeholder="Weight (kg)" class="p-3 border border-slate-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500">
+                    <input type="number" id="height" placeholder="Height (cm)" class="p-3 border border-slate-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500">
+                    <select id="activity" class="p-3 border border-slate-300 rounded-md md:col-span-2 focus:ring-emerald-500 focus:border-emerald-500">
+                        <option value="1.2">Sedentary</option>
+                        <option value="1.375">Lightly Active</option>
+                        <option value="1.55">Moderately Active</option>
+                        <option value="1.725">Very Active</option>
+                    </select>
+                    <button type="submit" class="md:col-span-2 bg-slate-600 text-white font-semibold py-3 px-4 rounded-md hover:bg-slate-700 transition duration-200">Calculate</button>
+                </form>
+                <div id="calculator-results" class="mt-6"></div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center py-8 text-slate-500 text-sm">
+    <p>Calorie Tracker App &copy; 2025 - Built by Moustafa Ameen UoBD</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
